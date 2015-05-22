@@ -6,20 +6,6 @@ body {
     color: #333;
 }
 
-a:link {
-    text-decoration: none;
-    color: #3333bb;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: blue;
-}
-
-a:visited {
-    color: inherit;
-}
-
 code {
     font-weight: bold;
     font-family: Consolas, Monaco, monospace;
