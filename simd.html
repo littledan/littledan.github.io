@@ -401,7 +401,7 @@ This internal algorithm creates a new value of the type corresponding to the spe
   <li>Assert: <var>byteOffset</var> is an integer greater than or equal to zero, and less than or equal to the size of <var>dataBlock</var> - <var>descriptor</var>.[[SIMDElementSize]] * <var>descriptor</var>.[[SIMDLength]].</li>
   <li>For <var>i</var> from 0 to <var>descriptor</var>.[[SIMDLength]] - 1,
     <ol>
-      <li><var>descriptor</var>.[[SIMDSerializeElement]](<var>dataBlock</var>, <var>byteOffset</var> + <var>i</var> * <var>descriptor</var>.[[SIMDElementSize]], <var>n_.[[SIMDElements]][_i</var>]).</li>
+      <li><var>descriptor</var>.[[SIMDSerializeElement]](<var>dataBlock</var>, <var>byteOffset</var> + <var>i</var> * <var>descriptor</var>.[[SIMDElementSize]], <var>n</var>.[[SIMDElements]][<var>i</var>]).</li>
     </ol>
   </li>
 </ol></emu-alg>
