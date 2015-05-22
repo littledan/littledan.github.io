@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 </head><body><emu-biblio href="./biblio.json"></emu-biblio>
 <h1>SIMD.js value semantics proposal</h1>
-<div><h2>Table of Contents</h2><ol class="toc"><li><a href="#intro"><span class="secnum"></span> Introduction</a></li><li><a href="#all-types"><span class="secnum">1</span> ECMAScript language types (6.1)</a><ol class="toc"><li><a href="#intrinsics"><span class="secnum">1.1</span> Well-Known Intrinsic Objects (6.1.7.4)</a></li></ol></li><li><a href="#types"><span class="secnum">2</span> SIMD types</a><ol class="toc"><li><a href="#type"><span class="secnum">2.1</span> Float32x4</a></li></ol></li><li><a href="#abstract-operations"><span class="secnum">3</span> Abstract Operations (7)</a><ol class="toc"><li><a href="#type-conversion"><span class="secnum">3.1</span> Type Conversion (7.1)</a><ol class="toc"><li><a href="#to-primitive"><span class="secnum">3.1.1</span> ToPrimitive ( input [, PreferredType] ) (7.1.1)</a></li><li><a href="#to-boolean"><span class="secnum">3.1.2</span> ToBoolean ( argument ) (7.1.2)</a></li><li><a href="#to-number"><span class="secnum">3.1.3</span> ToNumber ( argument ) (7.1.3)</a></li><li><a href="#to-string"><span class="secnum">3.1.4</span> ToString ( argument ) (7.1.12)</a></li><li><a href="#to-object"><span class="secnum">3.1.5</span> ToObject ( argument ) (7.1.13)</a></li></ol></li><li><a href="#require-object-coercible"><span class="secnum">3.2</span> RequireObjectCoercible ( argument ) (7.2.1)</a></li><li><a href="#same-value"><span class="secnum">3.3</span> SameValue(x, y) (7.2.9)</a></li><li><a href="#same-value-zero"><span class="secnum">3.4</span> SameValueZero(x, y) (7.2.10)</a></li><li><a href="#abstract-relational-comparison"><span class="secnum">3.5</span> Abstract relational comparison (7.2.11)</a></li><li><a href="#abstract-equality"><span class="secnum">3.6</span> Abstract Equality Comparison (7.2.12)</a></li><li><a href="#strict-equality-comparison"><span class="secnum">3.7</span> Strict Equality Comparison (7.2.13)</a></li></ol></li><li><a href="#typeof"><span class="secnum">4</span> The typeof Operator (12.5.6)</a><ol class="toc"><li><a href="#typeof-evaluation"><span class="secnum">4.1</span> Runtime Semantics: Evaluation (12.5.6.1)</a></li></ol></li><li><a href="#simd"><span class="secnum">5</span> SIMD objects</a><ol class="toc"><li><a href="#simd-algorithms"><span class="secnum">5.1</span> Internal algorithms on SIMD types</a><ol class="toc"><li><a href="#simd-create"><span class="secnum">5.1.1</span> SIMDCreate( constructor, fields...)</a></li><li><a href="#simd-extract-lane"><span class="secnum">5.1.2</span> SIMDExtractLane( simd, field )</a></li><li><a href="#simd-add"><span class="secnum">5.1.3</span> SIMDAdd( a, b )</a></li><li><a href="#simd-cast"><span class="secnum">5.1.4</span> SIMDCast( simd, newConstructor )</a></li><li><a href="#simd-constructor"><span class="secnum">5.1.5</span> _SIMD_</a><ol class="toc"><li><a href="#simd-wrap"><span class="secnum">5.1.5.1</span> _SIMD_( value )</a></li><li><a href="#simd-create"><span class="secnum">5.1.5.2</span> _SIMD_( fields... )</a></li><li><a href="#simd-add"><span class="secnum">5.1.5.3</span> _SIMD_.add(a, b)</a></li><li><a href="#simd-extract-lane"><span class="secnum">5.1.5.4</span> _SIMD_.extractLane(simd, field)</a></li><li><a href="#simd-proto"><span class="secnum">5.1.5.5</span> The _SIMD_.prototype</a><ol class="toc"><li><a href="#simd-proto-constructor"><span class="secnum">5.1.5.5.1</span> _SIMD_.prototype.constructor</a></li></ol></li><li><a href="#simd-float32x4"><span class="secnum">5.1.5.6</span> SIMD.Float32x4 object</a><ol class="toc"><li><a href="#serialize-float32"><span class="secnum">5.1.5.6.1</span> SerializeFloat32( block, offset, n )</a></li><li><a href="#deserialize-float32"><span class="secnum">5.1.5.6.2</span> DeserializeFloat32( block, offset )</a></li></ol></li></ol></li></ol></li></ol></li></ol></div><emu-intro id="intro">
+<div><h2>Table of Contents</h2><ol class="toc"><li><a href="#intro"><span class="secnum"></span> Introduction</a></li><li><a href="#all-types"><span class="secnum">1</span> ECMAScript language types (6.1)</a><ol class="toc"><li><a href="#intrinsics"><span class="secnum">1.1</span> Well-Known Intrinsic Objects (6.1.7.4)</a></li></ol></li><li><a href="#types"><span class="secnum">2</span> ECMAScript Data Types and Values 6</a><ol class="toc"><li><a href="#simd-types"><span class="secnum">2.1</span> SIMD types</a><ol class="toc"><li><a href="#type"><span class="secnum">2.1.1</span> Float32x4</a></li></ol></li></ol></li><li><a href="#abstract-operations"><span class="secnum">3</span> Abstract Operations (7)</a><ol class="toc"><li><a href="#type-conversion"><span class="secnum">3.1</span> Type Conversion (7.1)</a><ol class="toc"><li><a href="#to-primitive"><span class="secnum">3.1.1</span> ToPrimitive ( input [, PreferredType] ) (7.1.1)</a></li><li><a href="#to-boolean"><span class="secnum">3.1.2</span> ToBoolean ( argument ) (7.1.2)</a></li><li><a href="#to-number"><span class="secnum">3.1.3</span> ToNumber ( argument ) (7.1.3)</a></li><li><a href="#to-string"><span class="secnum">3.1.4</span> ToString ( argument ) (7.1.12)</a></li><li><a href="#to-object"><span class="secnum">3.1.5</span> ToObject ( argument ) (7.1.13)</a></li></ol></li><li><a href="#require-object-coercible"><span class="secnum">3.2</span> RequireObjectCoercible ( argument ) (7.2.1)</a></li><li><a href="#same-value"><span class="secnum">3.3</span> SameValue(x, y) (7.2.9)</a></li><li><a href="#same-value-zero"><span class="secnum">3.4</span> SameValueZero(x, y) (7.2.10)</a></li><li><a href="#abstract-relational-comparison"><span class="secnum">3.5</span> Abstract relational comparison (7.2.11)</a></li><li><a href="#abstract-equality"><span class="secnum">3.6</span> Abstract Equality Comparison (7.2.12)</a></li><li><a href="#strict-equality-comparison"><span class="secnum">3.7</span> Strict Equality Comparison (7.2.13)</a></li></ol></li><li><a href="#typeof"><span class="secnum">4</span> The typeof Operator (12.5.6)</a><ol class="toc"><li><a href="#typeof-evaluation"><span class="secnum">4.1</span> Runtime Semantics: Evaluation (12.5.6.1)</a></li></ol></li><li><a href="#simd"><span class="secnum">5</span> SIMD objects (top-level section)</a><ol class="toc"><li><a href="#simd-algorithms"><span class="secnum">5.1</span> Internal algorithms on SIMD types</a><ol class="toc"><li><a href="#simd-create"><span class="secnum">5.1.1</span> SIMDCreate( constructor, fields...)</a></li><li><a href="#simd-extract-lane"><span class="secnum">5.1.2</span> SIMDExtractLane( simd, field )</a></li><li><a href="#simd-add"><span class="secnum">5.1.3</span> SIMDAdd( a, b )</a></li><li><a href="#simd-cast"><span class="secnum">5.1.4</span> SIMDCast( simd, newConstructor )</a></li><li><a href="#simd-constructor"><span class="secnum">5.1.5</span> _SIMD_</a><ol class="toc"><li><a href="#simd-wrap"><span class="secnum">5.1.5.1</span> _SIMD_( value )</a></li><li><a href="#simd-create"><span class="secnum">5.1.5.2</span> _SIMD_( fields... )</a></li><li><a href="#simd-add"><span class="secnum">5.1.5.3</span> _SIMD_.add(a, b)</a></li><li><a href="#simd-extract-lane"><span class="secnum">5.1.5.4</span> _SIMD_.extractLane(simd, field)</a></li><li><a href="#simd-proto"><span class="secnum">5.1.5.5</span> The _SIMD_.prototype</a><ol class="toc"><li><a href="#simd-proto-constructor"><span class="secnum">5.1.5.5.1</span> _SIMD_.prototype.constructor</a></li></ol></li><li><a href="#simd-float32x4"><span class="secnum">5.1.5.6</span> SIMD.Float32x4 object</a><ol class="toc"><li><a href="#serialize-float32"><span class="secnum">5.1.5.6.1</span> SerializeFloat32( block, offset, n )</a></li><li><a href="#deserialize-float32"><span class="secnum">5.1.5.6.2</span> DeserializeFloat32( block, offset )</a></li></ol></li></ol></li></ol></li></ol></li></ol></div><emu-intro id="intro">
 <h1><span class="secnum"></span>Introduction</h1>
 <p>
 This proposal adds SIMD types and operations to Javascript, focusing on the value semantics. The proposal adds new primitive types Float32x4, etc, together with wrappers and a definition of their behavior in the language. The proposal discusses Float32x4 and just a couple functions on it, with the idea that it would extend similarly to other SIMD types. More definitions for more types and functions that operate on them can be found at <a href="https://github.com/johnmccutchan/ecmascript_simd/blob/master/tc39/simd-spec262.md">the SIMD.js spec</a>.
@@ -20,11 +20,13 @@ Ideally, SIMD values will fit into a larger value types proposal. Such a proposa
 </p>
 
 <p>
-This document is organized in terms of where changes would be made to the ES6 spec. Although ecmarkup generates numbering at the beginning of headers, these won't correspond to the numbering within the existing ECMA spec, so I've included a matching numbering in parentheses afterwards, referring to the ES6 spec. I also intend to add crossreferencing links where appropriate.
+This document is organized in terms of where changes would be made to the ES6 spec. Although ecmarkup generates numbering at the beginning of headers, these won't correspond to the numbering within the existing ECMA spec, so I've included a matching numbering in parentheses afterwards, referring to the ES6 spec. Crossreferencing links to ES6 exist where appropriate.
 </p>
 
 <p>
 In this text, <var>SIMD</var> is used to refer to the various SIMD types: Float32x4, Int32x4, Int16x8, Int8x16, and Float64x2. Similarly to Number, <var>SIMD</var> is used to refer to both the type <em>and</em> the wrapper constructor object. This looks a bit confusing, but it provides the most regularity, as an aim of this specification is to make SIMD types primitives that operate analogously to the existing primitives, rather than a new, exotic sort of thing. </p>
+
+<p>Because this document is in spec order, rather than written for direct readability, the logical starting point is actually <a href="simd-constructor">halfway down</a></p>
 
 <p>
 Related links:
@@ -67,14 +69,17 @@ Related links:
 </emu-clause>
 
 <emu-clause id="types">
-<h1><span class="secnum">2</span>SIMD types</h1>
+<h1><span class="secnum">2</span>ECMAScript Data Types and Values <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">6</a></h1>
+<emu-clause id="simd-types">
+<h1><span class="secnum">2.1</span>SIMD types</h1>
 <emu-clause id="type">
-<h1><span class="secnum">2.1</span>Float32x4</h1>
+<h1><span class="secnum">2.1.1</span>Float32x4</h1>
 
 <p>
 <code>Float32x4</code> is a SIMD type representing four 32-bit floating point values. Float32x4 values can be created using the [[Call]] operation on the <a href="#simd-float32x4">SIMD.Float32x4</a> object.
 </p>
 <emu-note><span class="note">Note</span> Similar entries should exist for each of the 5 SIMD types </emu-note>
+</emu-clause>
 </emu-clause>
 </emu-clause>
 
@@ -237,7 +242,7 @@ Add a new step 9, before the existing step 9:
 </emu-clause>
 
 <emu-clause id="simd">
-<h1><span class="secnum">5</span>SIMD objects</h1>
+<h1><span class="secnum">5</span>SIMD objects (top-level section)</h1>
 
 <p>
 The SIMD global object has several constructor properties, one for each SIMD type.
@@ -315,7 +320,7 @@ This internal algorithm creates a new value of the type corresponding to the spe
 
 <emu-clause id="simd-cast">
 <h1><span class="secnum">5.1.4</span>SIMDCast( simd, newConstructor )</h1>
-<emu-note><span class="note">Note</span>This is used to define operations like SIMD.Float32x4.fromInt8x16Bits, but it is not used yet because no other SIMD types are defined in this document yet.
+<emu-note><span class="note">Note</span>This is used to define operations like SIMD.Float32x4.fromInt8x16Bits, but it is not used yet because no other SIMD types are defined in this document yet.</emu-note>
 <emu-alg><ol>
   <li>Assert: <var>simd</var>.[[SIMDConstructor]].[[SIMDLength]] * <var>simd</var>.[[SIMDConstructor]].[[SIMDElementSize]] == <var>newConstructor</var>.[[SIMDLength]] * <var>newConstructor</var>.[[SIMDElementSize]].</li>
   <li>Let <var>bytes</var> be <var>newConstructor</var>.[[SIMDLength]] * <var>newConstructor</var>.[[SIMDElementSize]].</li>
@@ -324,7 +329,7 @@ This internal algorithm creates a new value of the type corresponding to the spe
   <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-copydatablockbytes">CopyDataBlockBytes</a>(<var>block</var>, 0, <var>simd</var>.[[SIMDDataBlock]], 0, <var>bytes</var>).</li>
   <li>Return the record { [[SIMDConstructor]]: <var>newConstructor</var>, [[SIMDDataBlock]]: <var>block</var> }.</li>
 </ol></emu-alg>
-</emu-note></emu-clause>
+</emu-clause>
 
 <emu-clause id="simd-constructor">
 <h1><span class="secnum">5.1.5</span><var>SIMD</var></h1>
@@ -415,7 +420,7 @@ The SIMD.Float32x4 intrinsic object has the following hidden slots:
 
 <emu-clause id="deserialize-float32">
 <h1><span class="secnum">5.1.5.6.2</span>DeserializeFloat32( block, offset )</h1>
-<emu-note><span class="note">Note</span>Derived from part of SetValueInBuffer</emu-note>
+<emu-note><span class="note">Note</span>Derived from part of GetValueInBuffer</emu-note>
 <emu-alg><ol>
   <li>Assert: <var>block</var> is a Data Block.</li>
   <li>Assert: <var>offset</var> is a number.</li>
