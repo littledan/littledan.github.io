@@ -217,3 +217,13 @@ ins {
 del {
     background-color: #fee;
 }
+
+a:link {
+    text-decoration: none;
+    color: #3333bb;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: blue;
+}
