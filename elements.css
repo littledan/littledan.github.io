@@ -30,7 +30,7 @@ ol.toc ol.toc {
     list-style: none;
 }
 
-emu-val {
+emu-val emu-const {
   font-weight: bold;
 }
 emu-alg ol, emu-alg ol ol ol ol {
