@@ -477,7 +477,7 @@ This internal algorithm creates a new value of the type corresponding to the spe
   <li>Assert: <var>dataBlock</var> is a Data Block, <var>descriptor</var> is a SIMD type descriptor</li>
   <li>If <var>length</var> is not provided, let <var>length</var> be <var>descriptor</var>.[[SIMDLength]]. Otherwise, assert <var>length</var> &lt;= <var>descriptor</var>.[[SIMDLength]].</li>
   <li>Assert: <var>byteOffset</var> is an integer greater than or equal to zero, and less than or equal to the size of <var>dataBlock</var> - <var>descriptor</var>.[[SIMDElementSize]] * <var>length</var>.</li>
-  <li>For <var>i</var> from 0 to <var>length</var>,
+  <li>For <var>i</var> from 0 to <var>length</var> - 1,
     <ol>
       <li><var>descriptor</var>.[[SIMDSerializeElement]](<var>dataBlock</var>, <var>byteOffset</var> + <var>i</var> * <var>descriptor</var>.[[SIMDElementSize]], <var>n</var>.[[SIMDElements]][<var>i</var>]).</li>
     </ol>
