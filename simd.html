@@ -617,9 +617,9 @@ This property is defined only on SIMD types with floating point values.
 <emu-clause>
 
 <emu-clause id="simd-max-num">
-<h1><span class="secnum">5.2.11.1.1</span><span class="secnum">5.2.11.1</span><var>SIMD</var>Constructor.maxNum(a, b)</h1>
 This property is defined only on SIMD types with floating point values.
 <emu-note><span class="note">Note</span>In this specification, that includes only Float32x4 and Float64x2</emu-note>
+<h1><span class="secnum">5.2.11.1.1</span><span class="secnum">5.2.11.1</span><var>SIMD</var>Constructor.maxNum(a, b)</h1>
 <emu-alg><ol>
   <li>If <var>a</var>.[[SIMDTypeDescriptor]] is not <var>SIMD</var>Descriptor or <var>b</var>.[[SIMDTypeDescriptor]] is not <var>SIMD</var>Descriptor, throw a TypeError.</li>
   <li>Return <a href="#simd-binary">SIMDBinaryOp</a>(<var>a</var>, <var>b</var>, MaxNum).</li>
