@@ -281,21 +281,63 @@ Even if it would be consistent to return false if it is all zero, there probably
 <emu-clause id="same-value">
 <h1><span class="secnum">2.3</span>SameValue(x, y) (<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevalue">7.2.9</a>)</h1>
 Add an extra step at the bottom of the definition of SameValue for the new case involving the new type:
-<emu-alg><ol start="11">
-  <li>For each SIMD type <var>SIMD</var>Type:
+<emu-alg><ol>
+  <li><a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
+  <li><a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>y</var>).</li>
+  <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>x</var>) is different from <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>y</var>), return <emu-const>false</emu-const>.</li>
+  <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>x</var>) is Undefined, return <emu-const>true</emu-const>.</li>
+  <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>x</var>) is Null, return <emu-const>true</emu-const>.</li>
+  <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>x</var>) is Number, then
     <ol>
-      <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(x) is <var>SIMD</var>Type:
+      <li>If <var>x</var> is <emu-const>NaN</emu-const> and <var>y</var> is <emu-const>NaN</emu-const>, return <emu-const>true</emu-const>.</li>
+      <li>If <var>x</var> is +0 and <var>y</var> is -0, return <emu-const>false</emu-const>.</li>
+      <li>If <var>x</var> is -0 and <var>y</var> is +0, return <emu-const>false</emu-const>.</li>
+      <li>If <var>x</var> is the same Number value as <var>y</var>, return <emu-const>true</emu-const>.</li>
+      <li>Return <emu-const>false</emu-const>.</li>
+    </ol>
+  </li>
+  <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>x</var>) is String, then
+    <ol>
+      <li>If <var>x</var> and <var>y</var> are exactly the same sequence of code units (same length and same code units at corresponding indices) return true; otherwise, return false.</li>
+    </ol>
+  </li>
+  <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>x</var>) is Boolean, then
+    <ol>
+      <li>If <var>x</var> and <var>y</var> are both true or both false, return true; otherwise, return false.</li>
+    </ol>
+  </li>
+  <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>x</var>) is Symbol, then
+    <ol>
+      <li>If <var>x</var> and <var>y</var> are both the same Symbol value, return true; otherwise, return false.</li>
+    </ol>
+  </li>
+  <li>
+    <ins>For each SIMD type <var>SIMD</var>Type:</ins>
+    <ol>
+      <li>
+        <ins>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>x</var>) is <var>SIMD</var>Type:</ins>
         <ol>
-          <li>Assert <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(y) is <var>SIMD</var>Type.</li>
-          <li>For <var>i</var> from 0 to <var>SIMD</var>Descriptor.[[SIMDLength]] - 1:
+          <li>
+            <ins>Assert <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>y</var>) is <var>SIMD</var>Type.</ins>
+          </li>
+          <li>
+            <ins>For <var>i</var> from 0 to <var>SIMD</var>Descriptor.[[SIMDLength]] - 1:</ins>
             <ol>
-              <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevalue">SameValue</a>(<a href="#simd-extract-lane">SIMDExtractLane</a>(<var>x</var>, <var>i</var>), <a href="#simd-extract-lane">SIMDExtractLane</a>(<var>y</var>, <var>i</var>)) is <emu-const>false</emu-const>, return <emu-const>false</emu-const>.</li>
+              <li>
+                <ins>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevalue">SameValue</a>(<a href="#simd-extract-lane">SIMDExtractLane</a>(<var>x</var>, <var>i</var>), <a href="#simd-extract-lane">SIMDExtractLane</a>(<var>y</var>, <var>i</var>)) is <emu-const>false</emu-const>, return <emu-const>false</emu-const>.</ins>
+              </li>
             </ol>
           </li>
-          <li>return <emu-const>true</emu-const></li>
+          <li>
+            <ins>return <emu-const>true</emu-const>
+            </ins>
+          </li>
         </ol>
       </li>
     </ol>
+  </li>
+  <li>
+    <ins>Return <emu-const>true</emu-const> if <var>x</var> and <var>y</var> are the same Object value. Otherwise, return <emu-const>false</emu-const>.</ins>
   </li>
 </ol></emu-alg>
 </emu-clause>
