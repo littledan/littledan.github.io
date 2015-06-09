@@ -164,7 +164,6 @@ While it would be possible to provide a conversion to Numbers, the conversion wo
 
 <emu-clause id="same-value-zero">
 <h1><span class="secnum">2.4</span>SameValueZero(x, y) (<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero">7.2.10</a>)</h1>
-Add an extra step at the bottom of the definition of SameValueZero for the new case involving the new type:
 <emu-alg><ol>
   <li><a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
   <li><a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>y</var>).</li>
@@ -220,7 +219,6 @@ Add an extra step at the bottom of the definition of SameValueZero for the new c
 
 <emu-clause id="abstract-equality">
 <h1><span class="secnum">2.6</span>Abstract Equality Comparison (<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-abstract-equality-comparison">7.2.12</a>)</h1>
-Replace step 10 with the following:
 <emu-alg><ol>
   <li><a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
   <li><a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>y</var>).</li>
@@ -381,11 +379,11 @@ When <code>Int64</code> is called with argument <var>value</var>, the following 
 <emu-clause id="int64-properties">
 <h1><span class="secnum">5.2.2</span>Properties of the Int64 constructor</h1>
 <p>
-f the [[Prototype]] internal slot of the Number constructor is the intrinsic object %FunctionPrototype% (19.2.3).
+The value of the [[Prototype]] internal slot of the Int64 constructor is the intrinsic object %FunctionPrototype% (19.2.3).
 </p>
 
 <p>
-Besides the <code>length</code> property (whose value is <emu-const>1</emu-const>), the Number constructor has the following properties:
+Besides the <code>length</code> property (whose value is <emu-const>1</emu-const>), the Int64 constructor has the following properties:
 </p>
 
 <emu-clause id="int64-max-value">
