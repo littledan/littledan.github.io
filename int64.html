@@ -66,7 +66,7 @@ The Int64 type is the set of all integers [-9223372036854775808,9223372036854775
 <emu-clause id="to-boolean">
 <h1><span class="secnum">2.1.2</span>ToBoolean ( argument ) (<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toboolean">7.1.2</a>)</h1>
 
-<strong>Argument type</strong>: <var>SIMD</var>Type
+<strong>Argument type</strong>: Int64
 <br>
 <strong>Result</strong>: If <var>argument</var> is 0, return <emu-const>false</emu-const>; otherwise, return <emu-const>true</emu-const>.
 
@@ -215,7 +215,7 @@ Add an extra step at the bottom of the definition of SameValueZero for the new c
 
 <emu-clause id="abstract-relational-comparison">
 <h1><span class="secnum">2.5</span>Abstract Relational Comparison (<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-abstract-relational-comparison">7.2.11</a>)</h1>
-<emu-note><span class="note">Note</span><p>No changes needed for SIMD; it will throw a TypeError if either operand is a SIMD value because the algorithm will call ToNumber in step 6.a or 6.c, which throws on SIMD values.</p><p>It is important for Abstract Relational Comparison to throw on SIMD types because there is no clear scalar boolean interpretation, and allowing it to throw makes it possible overload the operator in the future.</p></emu-note>
+<emu-note><span class="note">Note</span><p>No changes needed for Int64; it will throw a TypeError if either operand is a Int64 value because the algorithm will call ToNumber in step 6.a or 6.c, which throws on Int64 values.</p><p>It is important for Abstract Relational Comparison to throw on Int64 types because there is no clear scalar boolean interpretation, and allowing it to throw makes it possible overload the operator in the future.</p></emu-note>
 </emu-clause>
 
 <emu-clause id="abstract-equality">
