@@ -324,7 +324,7 @@ While it would be possible to provide a conversion to Numbers, the conversion wo
 <emu-alg><ol>
   <li>If no arguments were passed to this function invocation, let <var>n</var> be +0.</li>
   <li>
-    <ins>Else, if <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>n</var>) is Int64, return the result of converting <var>n</var> to Number.
+    <ins>Else, if <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>n</var>) is Int64, let <var>n</var> be the result of converting <var>value</var> to Number. This may lose precision.
       <!-- TODO(littledan): IEEE754 reference? -->
     </ins>
   </li>
