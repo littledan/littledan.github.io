@@ -854,7 +854,6 @@ This definition uses the refers to - as defined by <a href="https://people.mozil
 <h1><span class="secnum">5.2.7</span><var>SIMD</var>Constructor.mul(a, b)</h1>
 This definition uses the refers to - as defined by <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-applying-the-mul-operator">ES2015 12.6.3.1 (Applying the * Operator)</a>, with the following change in behavior: If either argument to + is a sub-normal floating point number, then the result may be defined as either gradual underflow or flushing the result to 0.
 <emu-note><span class="note">Note</span>The definition is weaker for SIMD than for scalar + to allow for implementation on some SIMD architectures which flush to 0 on subnormals.</emu-note>
-<emu-note><span class="note">Note</span>Is this appropriate for all SIMD types?</emu-note>
 <emu-alg><ol>
   <li>If <var>a</var>.[[SIMDTypeDescriptor]] is not <var>SIMD</var>Descriptor or <var>b</var>.[[SIMDTypeDescriptor]] is not <var>SIMD</var>Descriptor, throw a TypeError.</li>
   <li>If <var>SIMD</var>Type is an integer SIMD type, let <var>op</var> be %Math_imul%; otherwise, <var>SIMD</var>Type is a floating point SIMD type, and let <var>op</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-applying-the-mul-operator">*</a>.</li>
@@ -952,7 +951,6 @@ This property is defined only on floating point SIMD types.
 <emu-clause id="simd-neg">
 <h1><span class="secnum">5.2.15</span><var>SIMD</var>Constructor.neg(a)</h1>
 This definition uses the refers to unary - as defined by <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-unary-minus-operator">ES2015 12.5.10 (Unary - Operator)</a>.
-<emu-note><span class="note">Note</span>Is this appropriate for all SIMD types?</emu-note>
 <emu-alg><ol>
   <li>If <var>a</var>.[[SIMDTypeDescriptor]] is not <var>SIMD</var>Descriptor, throw a TypeError.</li>
   <li>Let <var>result</var> be <a href="#simd-scalar">SIMDUnaryOp</a>(<var>a</var>, <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-unary-minus-operator">-</a>).</li>
