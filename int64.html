@@ -5,11 +5,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 </head><body><emu-biblio href="./biblio.json"></emu-biblio>
 <h1>Int64 strawman</h1>
-<div><h2>Table of Contents</h2><ol class="toc"><li><a href="#intro"><span class="secnum"></span> Introduction</a></li><li><a href="#types"><span class="secnum">1</span> ECMAScript Data Types and Values (6)</a><ol class="toc"><li><a href="#all-types"><span class="secnum">1.1</span> ECMAScript language types (6.1)</a><ol class="toc"><li><a href="#intrinsics"><span class="secnum">1.1.1</span> Well-Known Intrinsic Objects (6.1.7.4)</a></li></ol></li><li><a href="#int64-type"><span class="secnum">1.2</span> The Int64 type</a></li><li><a href="#uint64-type"><span class="secnum">1.3</span> The Uint64 type</a></li></ol></li><li><a href="#abstract-operations"><span class="secnum">2</span> Abstract Operations (7)</a><ol class="toc"><li><a href="#type-conversion"><span class="secnum">2.1</span> Type Conversion (7.1)</a><ol class="toc"><li><a href="#to-primitive"><span class="secnum">2.1.1</span> ToPrimitive ( input [, PreferredType] ) (7.1.1)</a></li><li><a href="#to-boolean"><span class="secnum">2.1.2</span> ToBoolean ( argument ) (7.1.2)</a></li><li><a href="#to-number"><span class="secnum">2.1.3</span> ToNumber ( argument ) (7.1.3)</a></li><li><a href="#to-int64"><span class="secnum">2.1.4</span> ToInt64 ( argument )</a></li><li><a href="#to-uint64"><span class="secnum">2.1.5</span> ToUint64 ( argument )</a></li><li><a href="#to-string"><span class="secnum">2.1.6</span> ToString ( argument ) (7.1.12)</a></li><li><a href="#to-object"><span class="secnum">2.1.7</span> ToObject ( argument ) (7.1.13)</a></li></ol></li><li><a href="#require-object-coercible"><span class="secnum">2.2</span> RequireObjectCoercible ( argument ) (7.2.1)</a></li><li><a href="#same-value"><span class="secnum">2.3</span> SameValue(x, y) (7.2.9)</a></li><li><a href="#same-value-zero"><span class="secnum">2.4</span> SameValueZero(x, y) (7.2.10)</a></li><li><a href="#abstract-relational-comparison"><span class="secnum">2.5</span> Abstract Relational Comparison (7.2.11)</a></li><li><a href="#abstract-equality"><span class="secnum">2.6</span> Abstract Equality Comparison (7.2.12)</a></li><li><a href="#strict-equality-comparison"><span class="secnum">2.7</span> Strict Equality Comparison (7.2.13)</a></li></ol></li><li><a href="#numeric-literals"><span class="secnum">3</span> Numeric Literals</a><ol class="toc"><li><a href="#numeric-literals-mv"><span class="secnum">3.1</span> Static Semantics: MV</a></li></ol></li><li><a href="#typeof"><span class="secnum">4</span> The typeof Operator (12.5.6)</a><ol class="toc"><li><a href="#typeof-evaluation"><span class="secnum">4.1</span> Runtime Semantics: Evaluation (12.5.6.1)</a></li></ol></li><li><a href="#addition"><span class="secnum">5</span> The Addition operator ( + ) (12.7.3)</a><ol class="toc"><li><a href="#addition-semantics"><span class="secnum">5.1</span> Runtime Semantics: Evaluation (12.7.3.1)</a></li></ol></li><li><a href="#numbers-and-dates"><span class="secnum">6</span> Numbers and Dates (20)</a><ol class="toc"><li><a href="#number"><span class="secnum">6.1</span> Number Objects (20.1)</a><ol class="toc"><li><a href="#number-constructor"><span class="secnum">6.1.1</span> The Number Constructor (20.1.1)</a><ol class="toc"><li><a href="#number-value"><span class="secnum">6.1.1.1</span> Number ( [ value ] ) (20.1.1.1)</a></li></ol></li></ol></li><li><a href="#int64"><span class="secnum">6.2</span> Int64 Objects</a><ol class="toc"><li><a href="#int64-constructor"><span class="secnum">6.2.1</span> The Int64 constructor</a><ol class="toc"><li><a href="#int64-value"><span class="secnum">6.2.1.1</span> Int64( [ value ] )</a></li></ol></li><li><a href="#int64-properties"><span class="secnum">6.2.2</span> Properties of the Int64 constructor</a><ol class="toc"><li><a href="#int64-max-value"><span class="secnum">6.2.2.1</span> Int64.MAX_VALUE</a></li><li><a href="#int64-min-value"><span class="secnum">6.2.2.2</span> Int64.MIN_VALUE</a></li><li><a href="#int64-add"><span class="secnum">6.2.2.3</span> Int64.add( a, b )</a></li><li><a href="#int64-sub"><span class="secnum">6.2.2.4</span> Int64.sub( a, b )</a></li><li><a href="#int64-mul"><span class="secnum">6.2.2.5</span> Int64.mul( a, b )</a></li><li><a href="#int64-div"><span class="secnum">6.2.2.6</span> Int64.div( a, b )</a></li><li><a href="#int64-mod"><span class="secnum">6.2.2.7</span> Int64.mod( a, b )</a></li><li><a href="#int64-neg"><span class="secnum">6.2.2.8</span> Int64.neg( a )</a></li><li><a href="#int64-not"><span class="secnum">6.2.2.9</span> Int64.not( a )</a></li><li><a href="#int64-and"><span class="secnum">6.2.2.10</span> Int64.and( a, b )</a></li><li><a href="#int64-or"><span class="secnum">6.2.2.11</span> Int64.or( a, b )</a></li><li><a href="#int64-xor"><span class="secnum">6.2.2.12</span> Int64.xor( a, b )</a></li><li><a href="#int64-greater-than"><span class="secnum">6.2.2.13</span> Int64.greaterThan( a, b )</a></li><li><a href="#int64-less-than"><span class="secnum">6.2.2.14</span> Int64.lessThan( a, b )</a></li><li><a href="#int64-greater-than-or-equal"><span class="secnum">6.2.2.15</span> Int64.greaterThanOrEqual( a, b )</a></li><li><a href="#int64-less-than-or-equal"><span class="secnum">6.2.2.16</span> Int64.lessThanOrEqual( a, b )</a></li><li><a href="#int64-compare"><span class="secnum">6.2.2.17</span> Int64.compare( a, b )</a></li><li><a href="#int64-min"><span class="secnum">6.2.2.18</span> Int64.min( values... )</a></li><li><a href="#int64-max"><span class="secnum">6.2.2.19</span> Int64.max( values... )</a></li><li><a href="#int64-abs"><span class="secnum">6.2.2.20</span> Int64.abs( a )</a></li><li><a href="#int64-combine"><span class="secnum">6.2.2.21</span> Int64.combine( lo, hi )</a></li><li><a href="#int64-shift-left"><span class="secnum">6.2.2.22</span> Int64.shiftLeft( value, shifter )</a></li><li><a href="#int64-shift-right-arithmetic"><span class="secnum">6.2.2.23</span> Int64.shiftRightArithmetic( value, shifter )</a></li><li><a href="#uint64-shift-right-logical"><span class="secnum">6.2.2.24</span> Uint64.shiftRightLogical( value, shifter )</a></li><li><a href="#uint64-clz"><span class="secnum">6.2.2.25</span> Uint64.clz( value )</a></li></ol></li><li><a href="#int64-proto"><span class="secnum">6.2.3</span> Properties of the Int64 Prototype Object</a><ol class="toc"><li><a href="#int64-proto-constructor>
+<div><h2>Table of Contents</h2><ol class="toc"><li><a href="#intro"><span class="secnum"></span> Introduction</a></li><li><a href="#types"><span class="secnum">1</span> ECMAScript Data Types and Values (6)</a><ol class="toc"><li><a href="#all-types"><span class="secnum">1.1</span> ECMAScript language types (6.1)</a><ol class="toc"><li><a href="#intrinsics"><span class="secnum">1.1.1</span> Well-Known Intrinsic Objects (6.1.7.4)</a></li></ol></li><li><a href="#int64-type"><span class="secnum">1.2</span> The Int64 type</a></li><li><a href="#uint64-type"><span class="secnum">1.3</span> The Uint64 type</a></li></ol></li><li><a href="#abstract-operations"><span class="secnum">2</span> Abstract Operations (7)</a><ol class="toc"><li><a href="#type-conversion"><span class="secnum">2.1</span> Type Conversion (7.1)</a><ol class="toc"><li><a href="#to-primitive"><span class="secnum">2.1.1</span> ToPrimitive ( input [, PreferredType] ) (7.1.1)</a></li><li><a href="#to-boolean"><span class="secnum">2.1.2</span> ToBoolean ( argument ) (7.1.2)</a></li><li><a href="#to-number"><span class="secnum">2.1.3</span> ToNumber ( argument ) (7.1.3)</a></li><li><a href="#to-int64"><span class="secnum">2.1.4</span> ToInt64 ( argument )</a></li><li><a href="#to-uint64"><span class="secnum">2.1.5</span> ToUint64 ( argument )</a></li><li><a href="#to-string"><span class="secnum">2.1.6</span> ToString ( argument ) (7.1.12)</a></li><li><a href="#to-object"><span class="secnum">2.1.7</span> ToObject ( argument ) (7.1.13)</a></li></ol></li><li><a href="#require-object-coercible"><span class="secnum">2.2</span> RequireObjectCoercible ( argument ) (7.2.1)</a></li><li><a href="#same-value"><span class="secnum">2.3</span> SameValue(x, y) (7.2.9)</a></li><li><a href="#same-value-zero"><span class="secnum">2.4</span> SameValueZero(x, y) (7.2.10)</a></li><li><a href="#abstract-relational-comparison"><span class="secnum">2.5</span> Abstract Relational Comparison (7.2.11)</a></li><li><a href="#abstract-equality"><span class="secnum">2.6</span> Abstract Equality Comparison (7.2.12)</a></li><li><a href="#strict-equality-comparison"><span class="secnum">2.7</span> Strict Equality Comparison (7.2.13)</a></li></ol></li><li><a href="#numeric-literals"><span class="secnum">3</span> Numeric Literals</a><ol class="toc"><li><a href="#numeric-literals-mv"><span class="secnum">3.1</span> Static Semantics: MV</a></li></ol></li><li><a href="#typeof"><span class="secnum">4</span> The typeof Operator (12.5.6)</a><ol class="toc"><li><a href="#typeof-evaluation"><span class="secnum">4.1</span> Runtime Semantics: Evaluation (12.5.6.1)</a></li></ol></li><li><a href="#addition"><span class="secnum">5</span> The Addition operator ( + ) (12.7.3)</a><ol class="toc"><li><a href="#addition-semantics"><span class="secnum">5.1</span> Runtime Semantics: Evaluation (12.7.3.1)</a></li></ol></li><li><a href="#numbers-and-dates"><span class="secnum">6</span> Numbers and Dates (20)</a><ol class="toc"><li><a href="#number"><span class="secnum">6.1</span> Number Objects (20.1)</a><ol class="toc"><li><a href="#number-constructor"><span class="secnum">6.1.1</span> The Number Constructor (20.1.1)</a><ol class="toc"><li><a href="#number-value"><span class="secnum">6.1.1.1</span> Number ( [ value ] ) (20.1.1.1)</a></li></ol></li></ol></li></ol></li><li><a href="#int64"><span class="secnum">7</span> Int64 Objects</a><ol class="toc"><li><a href="#int64-constructor"><span class="secnum">7.1</span> The Int64 constructor</a><ol class="toc"><li><a href="#int64-value"><span class="secnum">7.1.1</span> Int64( [ value ] )</a></li></ol></li><li><a href="#int64-properties"><span class="secnum">7.2</span> Properties of the Int64 constructor</a><ol class="toc"><li><a href="#int64-max-value"><span class="secnum">7.2.1</span> Int64.MAX_VALUE</a></li><li><a href="#int64-min-value"><span class="secnum">7.2.2</span> Int64.MIN_VALUE</a></li><li><a href="#int64-add"><span class="secnum">7.2.3</span> Int64.add( a, b )</a></li><li><a href="#int64-sub"><span class="secnum">7.2.4</span> Int64.sub( a, b )</a></li><li><a href="#int64-mul"><span class="secnum">7.2.5</span> Int64.mul( a, b )</a></li><li><a href="#int64-div"><span class="secnum">7.2.6</span> Int64.div( a, b )</a></li><li><a href="#int64-mod"><span class="secnum">7.2.7</span> Int64.mod( a, b )</a></li><li><a href="#int64-neg"><span class="secnum">7.2.8</span> Int64.neg( a )</a></li><li><a href="#int64-not"><span class="secnum">7.2.9</span> Int64.not( a )</a></li><li><a href="#int64-and"><span class="secnum">7.2.10</span> Int64.and( a, b )</a></li><li><a href="#int64-or"><span class="secnum">7.2.11</span> Int64.or( a, b )</a></li><li><a href="#int64-xor"><span class="secnum">7.2.12</span> Int64.xor( a, b )</a></li><li><a href="#int64-greater-than"><span class="secnum">7.2.13</span> Int64.greaterThan( a, b )</a></li><li><a href="#int64-less-than"><span class="secnum">7.2.14</span> Int64.lessThan( a, b )</a></li><li><a href="#int64-greater-than-or-equal"><span class="secnum">7.2.15</span> Int64.greaterThanOrEqual( a, b )</a></li><li><a href="#int64-less-than-or-equal"><span class="secnum">7.2.16</span> Int64.lessThanOrEqual( a, b )</a></li><li><a href="#int64-compare"><span class="secnum">7.2.17</span> Int64.compare( a, b )</a></li><li><a href="#int64-min"><span class="secnum">7.2.18</span> Int64.min( values... )</a></li><li><a href="#int64-max"><span class="secnum">7.2.19</span> Int64.max( values... )</a></li><li><a href="#int64-abs"><span class="secnum">7.2.20</span> Int64.abs( a )</a></li><li><a href="#int64-combine"><span class="secnum">7.2.21</span> Int64.combine( lo, hi )</a></li><li><a href="#int64-shift-left"><span class="secnum">7.2.22</span> Int64.shiftLeft( value, shifter )</a></li><li><a href="#int64-shift-right-arithmetic"><span class="secnum">7.2.23</span> Int64.shiftRightArithmetic( value, shifter )</a></li><li><a href="#uint64-shift-right-logical"><span class="secnum">7.2.24</span> Uint64.shiftRightLogical( value, shifter )</a></li><li><a href="#uint64-clz"><span class="secnum">7.2.25</span> Uint64.clz( value )</a></li></ol></li><li><a href="#int64-proto"><span class="secnum">7.3</span> Properties of the Int64 Prototype Object</a><ol class="toc"><li><a href="#int64-proto-constructor>
 The initial value of `Int64.prototype.constructor` is the intrinsic object %Int64%.
 </emu-clause>
 
-<emu-clause id="><span class="secnum">6.2.3.1</span> Int64.prototype.valueOf()</a></li><li><a href="#int64-tolocalestring"><span class="secnum">6.2.3.2</span> Int64.prototype.toLocaleString( [ reserved1 [ , reserved2 ] ])</a></li><li><a href="#int64-prototype-tostring"><span class="secnum">6.2.3.3</span> Int64.prototype.toString()</a></li></ol></li><li><a href="#typedarray-objects"><span class="secnum">6.2.4</span> TypedArray Objects (22.2)</a></li></ol></li></ol></li></ol></div><emu-intro id="intro">
+<emu-clause id="><span class="secnum">7.3.1</span> Int64.prototype.valueOf()</a></li><li><a href="#int64-tolocalestring"><span class="secnum">7.3.2</span> Int64.prototype.toLocaleString( [ reserved1 [ , reserved2 ] ])</a></li><li><a href="#int64-prototype-tostring"><span class="secnum">7.3.3</span> Int64.prototype.toString()</a></li></ol></li></ol></li><li><a href="#typedarray-objects"><span class="secnum">8</span> TypedArray Objects (22.2)</a></li></ol></div><emu-intro id="intro">
 <h1><span class="secnum"></span>Introduction</h1>
 <p>
 This proposal adds 64-bit integer arithmetic to ECMAScript. The main language features added are:
@@ -537,12 +537,13 @@ In "12.2.4 Literals", where <var>NumericLiteral</var> is referred to, instead us
 </emu-clause>
 </emu-clause>
 </emu-clause>
+</emu-clause>
 
 <emu-clause id="int64">
-<h1><span class="secnum">6.2</span>Int64 Objects</h1>
+<h1><span class="secnum">7</span>Int64 Objects</h1>
 
 <emu-clause id="int64-constructor">
-<h1><span class="secnum">6.2.1</span>The Int64 constructor</h1>
+<h1><span class="secnum">7.1</span>The Int64 constructor</h1>
 <p>
 The <code>Int64</code> constructor is the %Int64% intrinsic object and the initial value of the Int64 property of the global object. When called as a constructor, it creates and initializes a new Int64 object. When <code>Int64</code> is called as a function rather than as a constructor, it performs a type conversion. <code>Int64</code> has a number of function properties for operating on Int64 values.
 </p>
@@ -551,7 +552,7 @@ The <code>Int64</code> constructor is the %Int64% intrinsic object and the initi
 Uint64 will be defined similarly and has not yet been expanded on in this text.
 </p>
 <emu-clause id="int64-value">
-<h1><span class="secnum">6.2.1.1</span>Int64( [ value ] )</h1>
+<h1><span class="secnum">7.1.1</span>Int64( [ value ] )</h1>
 When <code>Int64</code> is called with argument <var>value</var>, the following steps are taken:
 <emu-alg><ol>
   <li>If no arguments were passed to this function invocation, let <var>n</var> be 0.</li>
@@ -566,7 +567,7 @@ When <code>Int64</code> is called with argument <var>value</var>, the following 
 </emu-clause>
 </emu-clause>
 <emu-clause id="int64-properties">
-<h1><span class="secnum">6.2.2</span>Properties of the Int64 constructor</h1>
+<h1><span class="secnum">7.2</span>Properties of the Int64 constructor</h1>
 <p>
 The value of the [[Prototype]] internal slot of the Int64 constructor is the intrinsic object %FunctionPrototype% (19.2.3).
 </p>
@@ -576,7 +577,7 @@ Besides the <code>length</code> property (whose value is <emu-const>1</emu-const
 </p>
 
 <emu-clause id="int64-max-value">
-<h1><span class="secnum">6.2.2.1</span>Int64.MAX_VALUE</h1>
+<h1><span class="secnum">7.2.1</span>Int64.MAX_VALUE</h1>
 <p>
 The value of Int64.MAX_VALUE is the largest positive value of the Int64 type, which is 9223372036854775807, tagged as Int64.
 </p>
@@ -586,7 +587,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-min-value">
-<h1><span class="secnum">6.2.2.2</span>Int64.MIN_VALUE</h1>
+<h1><span class="secnum">7.2.2</span>Int64.MIN_VALUE</h1>
 <p>
 The value of Int64.MIN_VALUE is the smallest negative value of the Int64 type, which is -9223372036854775808, tagged as Int64.
 </p>
@@ -596,7 +597,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-add">
-<h1><span class="secnum">6.2.2.3</span>Int64.add( a, b )</h1>
+<h1><span class="secnum">7.2.3</span>Int64.add( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return the result of adding the values of <var>a</var> and <var>b</var>, with signed 2's complement 64-bit overflow, as an Int64 value.</li>
@@ -604,7 +605,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-sub">
-<h1><span class="secnum">6.2.2.4</span>Int64.sub( a, b )</h1>
+<h1><span class="secnum">7.2.4</span>Int64.sub( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return the result of subtracting <var>b</var> from <var>a</var>, with signed 2's complement 64-bit overflow, as an Int64 value.</li>
@@ -612,7 +613,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-mul">
-<h1><span class="secnum">6.2.2.5</span>Int64.mul( a, b )</h1>
+<h1><span class="secnum">7.2.5</span>Int64.mul( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return the result of multiplying <var>a</var> by <var>b</var>, with signed 2's complement 64-bit overflow, as an Int64 value.</li>
@@ -620,7 +621,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-div">
-<h1><span class="secnum">6.2.2.6</span>Int64.div( a, b )</h1>
+<h1><span class="secnum">7.2.6</span>Int64.div( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>b</var> is 0, throw a <emu-const>RangeError</emu-const>.</li>
@@ -631,7 +632,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-mod">
-<h1><span class="secnum">6.2.2.7</span>Int64.mod( a, b )</h1>
+<h1><span class="secnum">7.2.7</span>Int64.mod( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>b</var> is 0, throw a <emu-const>RangeError</emu-const>.</li>
@@ -640,7 +641,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-neg">
-<h1><span class="secnum">6.2.2.8</span>Int64.neg( a )</h1>
+<h1><span class="secnum">7.2.8</span>Int64.neg( a )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>a</var> is -9223372036854775808, return <var>a</var>.</li>
@@ -649,7 +650,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-not">
-<h1><span class="secnum">6.2.2.9</span>Int64.not( a )</h1>
+<h1><span class="secnum">7.2.9</span>Int64.not( a )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return the bitwise negation of <var>a</var>, interpreted as a signed 2's complement 64-bit integer, as an Int64 value.</li>
@@ -657,7 +658,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-and">
-<h1><span class="secnum">6.2.2.10</span>Int64.and( a, b )</h1>
+<h1><span class="secnum">7.2.10</span>Int64.and( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return the bitwise and of <var>a</var> with <var>b</var> interpreted as signed 2's complement 64-bit integers, as an Int64 value.</li>
@@ -665,7 +666,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-or">
-<h1><span class="secnum">6.2.2.11</span>Int64.or( a, b )</h1>
+<h1><span class="secnum">7.2.11</span>Int64.or( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return the bitwise or of <var>a</var> with <var>b</var> interpreted as signed 2's complement 64-bit integers, as an Int64 value.</li>
@@ -673,7 +674,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-xor">
-<h1><span class="secnum">6.2.2.12</span>Int64.xor( a, b )</h1>
+<h1><span class="secnum">7.2.12</span>Int64.xor( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return the bitwise xor of <var>a</var> with <var>b</var> interpreted as signed 2's complement 64-bit integers, as an Int64 value.</li>
@@ -681,7 +682,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-greater-than">
-<h1><span class="secnum">6.2.2.13</span>Int64.greaterThan( a, b )</h1>
+<h1><span class="secnum">7.2.13</span>Int64.greaterThan( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>a</var> is greater than <var>b</var>, return <emu-const>true</emu-const>.</li>
@@ -690,7 +691,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-less-than">
-<h1><span class="secnum">6.2.2.14</span>Int64.lessThan( a, b )</h1>
+<h1><span class="secnum">7.2.14</span>Int64.lessThan( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>a</var> is less than <var>b</var>, return <emu-const>true</emu-const>.</li>
@@ -699,7 +700,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-greater-than-or-equal">
-<h1><span class="secnum">6.2.2.15</span>Int64.greaterThanOrEqual( a, b )</h1>
+<h1><span class="secnum">7.2.15</span>Int64.greaterThanOrEqual( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>a</var> is greater than or equal to <var>b</var>, return <emu-const>true</emu-const>.</li>
@@ -708,7 +709,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-less-than-or-equal">
-<h1><span class="secnum">6.2.2.16</span>Int64.lessThanOrEqual( a, b )</h1>
+<h1><span class="secnum">7.2.16</span>Int64.lessThanOrEqual( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>a</var> is less than or equal to <var>b</var>, return <emu-const>true</emu-const>.</li>
@@ -717,7 +718,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-compare">
-<h1><span class="secnum">6.2.2.17</span>Int64.compare( a, b )</h1>
+<h1><span class="secnum">7.2.17</span>Int64.compare( a, b )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64 or <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>b</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>a</var> is less than <var>b</var>, return the Number -1.</li>
@@ -727,7 +728,7 @@ This property has the attributes { [[Writable]]: <emu-const>false</emu-const>, [
 </emu-clause>
 
 <emu-clause id="int64-min">
-<h1><span class="secnum">6.2.2.18</span>Int64.min( values... )</h1>
+<h1><span class="secnum">7.2.18</span>Int64.min( values... )</h1>
 <emu-alg><ol>
   <li>If any of the <var>values</var> is not an Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If no arguments are given, then return the smallest Int64 value, -9223372036854775808 tagged as Int64.</li>
@@ -738,7 +739,7 @@ The <code>length</code> of <code>Int64.min</code> is <emu-const>2</emu-const>.
 </emu-clause>
 
 <emu-clause id="int64-max">
-<h1><span class="secnum">6.2.2.19</span>Int64.max( values... )</h1>
+<h1><span class="secnum">7.2.19</span>Int64.max( values... )</h1>
 <emu-alg><ol>
   <li>If any of the <var>values</var> is not an Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If no arguments are given, then return the largest Int64 value, 9223372036854775807 tagged as Int64.</li>
@@ -749,7 +750,7 @@ The <code>length</code> of <code>Int64.max</code> is <emu-const>2</emu-const>.
 </emu-clause>
 
 <emu-clause id="int64-abs">
-<h1><span class="secnum">6.2.2.20</span>Int64.abs( a )</h1>
+<h1><span class="secnum">7.2.20</span>Int64.abs( a )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>a</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>If <var>a</var> is less than 0 and <var>a</var> does not equal -9223372036854775808, return the Int64 value -<var>a</var>.</li>
@@ -758,7 +759,7 @@ The <code>length</code> of <code>Int64.max</code> is <emu-const>2</emu-const>.
 </emu-clause>
 
 <emu-clause id="int64-combine">
-<h1><span class="secnum">6.2.2.21</span>Int64.combine( lo, hi )</h1>
+<h1><span class="secnum">7.2.21</span>Int64.combine( lo, hi )</h1>
 <emu-alg><ol>
   <li>Let <var>loValue</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint32">ToUint32</a>(lo).</li>
   <li>Let <var>hiValue</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint32">ToUint32</a>(lo).</li>
@@ -768,7 +769,7 @@ The <code>length</code> of <code>Int64.max</code> is <emu-const>2</emu-const>.
 </emu-clause>
 
 <emu-clause id="int64-shift-left">
-<h1><span class="secnum">6.2.2.22</span>Int64.shiftLeft( value, shifter )</h1>
+<h1><span class="secnum">7.2.22</span>Int64.shiftLeft( value, shifter )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>value</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Let <var>shiftValue</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint32">ToUint32</a>(shifter).</li>
@@ -779,7 +780,7 @@ The <code>length</code> of <code>Int64.max</code> is <emu-const>2</emu-const>.
 </emu-clause>
 
 <emu-clause id="int64-shift-right-arithmetic">
-<h1><span class="secnum">6.2.2.23</span>Int64.shiftRightArithmetic( value, shifter )</h1>
+<h1><span class="secnum">7.2.23</span>Int64.shiftRightArithmetic( value, shifter )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>value</var>) is not Int64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Let <var>shiftValue</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint32">ToUint32</a>(shifter).</li>
@@ -791,7 +792,7 @@ The <code>length</code> of <code>Int64.max</code> is <emu-const>2</emu-const>.
 </emu-clause>
 
 <emu-clause id="uint64-shift-right-logical">
-<h1><span class="secnum">6.2.2.24</span>Uint64.shiftRightLogical( value, shifter )</h1>
+<h1><span class="secnum">7.2.24</span>Uint64.shiftRightLogical( value, shifter )</h1>
 <emu-alg><ol>
   <li>If <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(<var>value</var>) is not Uint64, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Let <var>shiftValue</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint32">ToUint32</a>(shifter).</li>
@@ -802,7 +803,7 @@ The <code>length</code> of <code>Int64.max</code> is <emu-const>2</emu-const>.
 </emu-clause>
 
 <emu-clause id="uint64-clz">
-<h1><span class="secnum">6.2.2.25</span>Uint64.clz( value )</h1>
+<h1><span class="secnum">7.2.25</span>Uint64.clz( value )</h1>
 <emu-alg><ol>
   <li>Return the number of leading 0 bits in the 64-bit representation of <var>value</var>.</li>
 </ol></emu-alg>
@@ -810,13 +811,13 @@ The <code>length</code> of <code>Int64.max</code> is <emu-const>2</emu-const>.
 
 </emu-clause>
 <emu-clause id="int64-proto">
-<h1><span class="secnum">6.2.3</span>Properties of the Int64 Prototype Object</h1>
+<h1><span class="secnum">7.3</span>Properties of the Int64 Prototype Object</h1>
 <emu-clause id="int64-proto-constructor>
 The initial value of `Int64.prototype.constructor` is the intrinsic object %Int64%.
 </emu-clause>
 
 <emu-clause id=" int64-prototype-valueof"="">
-<h1><span class="secnum">6.2.3.1</span>Int64.prototype.valueOf()</h1>
+<h1><span class="secnum">7.3.1</span>Int64.prototype.valueOf()</h1>
 <emu-alg><ol>
   <li>If <emu-const>this</emu-const> does not have a [[Int64Data]] internal slot, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return <emu-const>this</emu-const>.[[Int64Data]].</li>
@@ -824,7 +825,7 @@ The initial value of `Int64.prototype.constructor` is the intrinsic object %Int6
 </emu-clause>
 
 <emu-clause id="int64-tolocalestring">
-<h1><span class="secnum">6.2.3.2</span>Int64.prototype.toLocaleString( [ reserved1 [ , reserved2 ] ])</h1>
+<h1><span class="secnum">7.3.2</span>Int64.prototype.toLocaleString( [ reserved1 [ , reserved2 ] ])</h1>
 <p>
 An ECMAScript implementation that includes the ECMA-402 Internationalization API must implement the Int64.prototype.toLocaleString method as specified in the ECMA-402 specification. If an ECMAScript implementation does not include the ECMA-402 API the following specification of the toLocaleString method is used.
 </p>
@@ -844,7 +845,7 @@ The length property of the toLocaleString method is 0.
 </emu-clause>
 
 <emu-clause id="int64-prototype-tostring">
-<h1><span class="secnum">6.2.3.3</span>Int64.prototype.toString()</h1>
+<h1><span class="secnum">7.3.3</span>Int64.prototype.toString()</h1>
 <emu-alg><ol>
   <li>If <emu-const>this</emu-const> does not have a [[Int64Data]] internal slot, throw a <emu-const>TypeError</emu-const>.</li>
   <li>Return <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<emu-const>this</emu-const>.[[Int64Data]]).</li>
@@ -852,9 +853,10 @@ The length property of the toLocaleString method is 0.
 </emu-clause>
 
 </emu-clause>
+</emu-clause>
 
 <emu-clause id="typedarray-objects">
-<h1><span class="secnum">6.2.4</span>TypedArray Objects (<a href="http://ecma-international.org/ecma-262/6.0/#sec-typedarray-objects">22.2</a>)</h1>
+<h1><span class="secnum">8</span>TypedArray Objects (<a href="http://ecma-international.org/ecma-262/6.0/#sec-typedarray-objects">22.2</a>)</h1>
 TypedArrays are provided consisting of Int64 and Uint64 values. Unlike other TypedArrays, elements are 64-bit integers rather than Numbers. The definitions of SetValueInBuffer and GetValueFromBuffer must be modified to account for this difference. The conversion operation on Int64 and Uint64 is to check if the argument is of that particular type, throw a <emu-const>TypeError</emu-const> if not, and accept the value as is if so. DataView methods <code>getInt64</code>, <code>setInt64</code>, <code>getUint64</code>, and <code>setUint64</code> are also provided analogously.
 </emu-clause>
-</emu-clause></emu-clause></body>
+</body>
