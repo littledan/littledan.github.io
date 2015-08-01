@@ -13,7 +13,7 @@ This spec introduces <code>global</code>, a writable, configurable property of t
 <emu-intro id="motivation">
 <h1><span class="secnum"></span>Motivation</h1>
 <p>
-It is difficult to write portable ECMAScript code which accesses the global object. On the web, it is accessible as <code>window</code>; on Node.js, it is <code>global</code>; neither of those is available in a shell like V8's d8. In sloppy mode, it is <code>this</code>; in strict code, that can be accessed by <code>new Function('return this')</code>, but that form is inaccessible with some CSP settings. Some code from the wild to get the global object, passed in as the single argument to an IIFE, which works for most cases but won't actually work in d8 when in strict mode (it could be fixed using the <code>new Function</code> trick):
+It is difficult to write portable ECMAScript code which accesses the global object. On the web, it is accessible as <code>window</code>; on Node.js, it is <code>global</code>; neither of those is available in a shell like V8's d8. In sloppy mode, it is <code>this</code>; in strict code, that can be accessed by <code>new Function('return this')</code>, but that form is inaccessible with some CSP settings. Below is some code from the wild to get the global object, passed in as the single argument to an IIFE, which works for most cases but won't actually work in d8 when in strict mode (it could be fixed using the <code>new Function</code> trick):
 </p>
 <pre>// If we're in a browser, the global namespace is named 'window'. If we're
 // in node, it's named 'global'. If we're in a shell, 'this' might work.
