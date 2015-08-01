@@ -32,7 +32,7 @@ It is difficult to write portable ECMAScript code which accesses the global obje
 In HTML5, the global object is separated into the <code>Window</code> and the <a href="https://html.spec.whatwg.org/multipage/browsers.html#windowproxy"><code>WindowProxy</code></a>. New attributes are set on the <code>Window</code>, but top-level <code>this</code> has the identity of the <code>WindowProxy</code>. The <code>WindowProxy</code> forwards all object operations to the underlying <code>Window</code>, but as the page changes, the global object maintains the same identity while the underlying <code>Window</code> is swapped out.
 </p>
 <p>
-ES2015 does not account for the <code>Window</code>/<code>WindowProxy</code> structure, and simply refers to "the global object" directly. This specification does the same. The specification change for top-level <code>this</code> will also change the definition of <code>global</code>.
+ES2015 does not account for the <code>Window</code>/<code>WindowProxy</code> structure, and simply refers to "the global object" directly. This specification does the same. If the ECMAScript specification is changed for top-level <code>this</code> to account for <code>WindowProxy</code>, then the change should also apply to the definition of <code>global</code>.
 </p>
 </emu-intro>
 <emu-intro id="ses">
