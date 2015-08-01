@@ -1,0 +1,56 @@
+<!doctype html>
+<head><meta charset="utf8">
+<title>Accessible global object</title>
+<link rel="stylesheet" href="https://bterlson.github.com/ecmarkup/elements.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+</head><body><emu-biblio href="./biblio.json"></emu-biblio>
+<h1>Accessible global object</h1>
+<div><h2>Table of Contents</h2><ol class="toc"><li><a href="#intro"><span class="secnum"></span> Introduction</a><ol class="toc"><li><a href="#motivation"><span class="secnum"></span> Motivation</a></li><li><a href="#html"><span class="secnum"></span> HTML and the WindowProxy</a></li><li><a href="#ses"><span class="secnum"></span> SES interaction</a></li></ol></li><li><a href="#properties"><span class="secnum">1</span> Other Properties of the Global Object (18.4 )</a><ol class="toc"><li><a href="#global"><span class="secnum">1.1</span> global</a><ol class="toc"><li><a href="#global"><span class="secnum">1.1.1</span> 1.1global</a></li></ol></li></ol></li></ol></div><emu-intro id="intro">
+<h1><span class="secnum"></span>Introduction</h1>
+<p>
+This spec introduces <code>global</code>, a writable, configurable property of the global object which has the global object as its value. This name should be intuitive for developers, many of whom have seen the usage in Node, and it is short and easy to type.
+</p>
+<emu-intro id="motivation">
+<h1><span class="secnum"></span>Motivation</h1>
+<p>
+It is difficult to write portable ECMAScript code which accesses the global object. On the web, it is accessible as <code>window</code>; on Node.js, it is <code>global</code>; neither of those is available in a shell like V8's d8. In sloppy mode, it is <code>this</code>; in strict code, that can be accessed by <code>new Function('return this')</code>, but that form is inaccessible with some CSP settings. Some code from the wild to get the global object, passed in as the single argument to an IIFE, which works for most cases but won't actually work in d8 when in strict mode (it could be fixed using the <code>new Function</code> trick):
+</p>
+<pre>// If we're in a browser, the global namespace is named 'window'. If we're
+// in node, it's named 'global'. If we're in a shell, 'this' might work.
+})(typeof window !== "undefined"
+   ? window
+   : (typeof process === 'object' &amp;&amp;
+      typeof require === 'function' &amp;&amp;
+      typeof global === 'object')
+     ? global
+     : this);
+</pre>
+</emu-intro>
+<emu-intro id="html">
+<h1><span class="secnum"></span>HTML and the WindowProxy</h1>
+<p>
+In HTML5, the global object is separated into the <code>Window</code> and the <a href="https://html.spec.whatwg.org/multipage/browsers.html#windowproxy"><code>WindowProxy</code></a>. New attributes are set on the <code>Window</code>, but top-level <code>this</code> has the identity of the <code>WindowProxy</code>. The <code>WindowProxy</code> forwards all object operations to the underlying <code>Window</code>, but as the page changes, the global object maintains the same identity while the underlying <code>Window</code> is swapped out.
+</p>
+<p>
+ES2015 does not account for the <code>Window</code>/<code>WindowProxy</code> structure, and simply refers to "the global object" directly. This specification does the same. The specification change for top-level <code>this</code> will also change the definition of <code>global</code>.
+</p>
+</emu-intro>
+<emu-intro id="ses">
+<h1><span class="secnum"></span>SES interaction</h1>
+For Secure ECMAScript, it is important that all references to the global object be spoof-able and capable of being locked down, so that each context gets its own shadow global context. Additionally, references to the global object should not be reachable from other ECMAScript intrinsic objects, which SES would like to simply recursively freeze. In this proposal, <code>global</code> is a writable, configurable property of the global object, so it should meet SES requirements.
+</emu-intro>
+</emu-intro>
+<emu-clause id="properties">
+<h1><span class="secnum">1</span>Other Properties of the Global Object (<a href="http://www.ecma-international.org/ecma-262/6.0/#sec-other-properties-of-the-global-object">18.4 </a>)</h1>
+<emu-clause id="global">
+<emu-clause id="global">
+<h1><span class="secnum">1.1.1</span><span class="secnum">1.1</span>global</h1>
+<p>
+The initial value of the <code>"global"</code> property of the global object is the global object.
+</p>
+<p>
+This property has the attributes {[[Writable]]: <emu-val>true</emu-val>, [[Enumerable]]: <emu-val>false</emu-val>, [[Configurable]]: <emu-val>true</emu-val> }.
+</p>
+</emu-clause>
+</emu-clause>
+</emu-clause></body>
