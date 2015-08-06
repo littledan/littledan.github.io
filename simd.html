@@ -591,7 +591,7 @@ The SIMD global object has several constructor properties, one for each SIMD typ
 </p>
 
 <p>
-Each SIMD value is specified as a record with the following internal attributes:
+Each SIMD value is specified as a record with the following internal slots:
 </p>
 <ul>
 <li>[[SIMDTypeDescriptor]], which refers to the wrapper constructor for the type.</li>
@@ -1011,7 +1011,7 @@ This property is defined only on floating point SIMD types.
 This definition uses the refers to unary - as defined by <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-unary-minus-operator">ES2015 12.5.10 (Unary - Operator)</a>.
 </p>
 <p>
-This operation is only defined on integer and floating point SIMD types.
+This operation is only defined on signed integer and floating point SIMD types.
 </p>
 <emu-alg><ol>
   <li>If <var>a</var>.[[SIMDTypeDescriptor]] is not <var>SIMD</var>Descriptor, throw a TypeError.</li>
